@@ -1,4 +1,7 @@
-# Kenya Food Prices (World Bank RTFP): Airflow → pandas → PostgreSQL → Power BI
+# Kenya_Food_Price_Data_Platform
+---
+This is a reproducible, data-integrity-focused batch ETL pipeline that automates the ingestion, transformation, and optimization of sub-national market price tracking datasets. Built using Apache Airflow, pandas, and a PostgreSQL star schema, this platform structures fragile real-time development indicators into analytics-ready dimensions and facts for reporting inside Power BI.
+> Airflow → pandas → PostgreSQL → Power BI
 
 A reproducible batch pipeline for the World Bank dataset
 **Monthly food price estimates by product and market, Kenya** (`KEN_2021_RTFP_v02_M`).
@@ -362,5 +365,6 @@ ruff check .
 | `rowcount_vs_source` fails | Rows were lost or duplicated between extract and load. Inspect `meta.reject_row` and `meta.dq_result.detail` |
 | DAG missing in the UI | `airflow dags list-import-errors`; confirm `AIRFLOW__CORE__DAGS_FOLDER` and that `ken_rtfp` is installed in the venv (`pip show ken-rtfp`) |
 
+## License
 
-
+This project is open-source and licensed under the terms of the [MIT LICENSE](MIT).
