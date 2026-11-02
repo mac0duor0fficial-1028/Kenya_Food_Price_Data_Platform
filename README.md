@@ -11,48 +11,8 @@ A reproducible batch pipeline for the World Bank dataset
 **Monthly food price estimates by product and market, Kenya** (`KEN_2021_RTFP_v02_M`).
 Source: <https://microdata.worldbank.org/catalog/6167>
 
-```mermaid
-graph LR
-    %% Styles
-    classDef step fill:#1e1e1e,stroke:#888,stroke-width:1px,color:#fff;
-    classDef db fill:#1e1e1e,stroke:#888,stroke-width:1px,color:#fff;
-    classDef decision fill:#1e1e1e,stroke:#888,stroke-width:1px,color:#fff;
+![Kenya_Food_Price_Data_Platform_Architecture](images/your-exported-diagram.svg)
 
-    %% Nodes
-    RawFile[("Raw file")]:::db
-    Extract["Extract"]:::step
-    Transform["Transform"]:::step
-    Load["Load<br>dims + fact"]:::step
-    DQ{"DQ checks"}:::decision
-    Publish["Publish"]:::step
-    Blocked["Blocked"]:::step
-    PowerBI["Power BI"]:::step
-    Postgres[("PostgreSQL<br>star schema")]:::db
-    Lineage[("Lineage<br>meta.etl_run, reject_row,<br>dq_result")]:::db
-
-    %% Main ETL Flow
-    RawFile --> Extract
-    Extract --> Transform
-    Transform --> Load
-    Load --> DQ
-
-    %% DQ Conditional Branches
-    DQ -- pass --> Publish
-    DQ -- error --> Blocked
-
-    %% Outputs from Publish
-    Publish --> PowerBI
-    Publish --> Postgres
-
-    %% Lineage and Metadata Dotted Connections
-    Extract -.-> Lineage
-    Transform -.-> Lineage
-    Load -.-> Lineage
-    Load -.-> Postgres
-    DQ -.-> Lineage
-    Blocked -.-> Lineage
-    Publish -.-> Lineage
-```
 
 - **Orchestration:** Apache Airflow (one DAG, 7 tasks)
 - **Transform:** pandas + Parquet staging files
