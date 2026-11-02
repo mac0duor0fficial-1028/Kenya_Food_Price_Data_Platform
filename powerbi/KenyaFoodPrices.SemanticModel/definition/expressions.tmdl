@@ -1,0 +1,5 @@
+expression PgServer = "localhost:5433" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text]
+	lineageTag: 0237410c-01bd-5276-87ba-eaf00ba21b68
+
+expression PgDatabase = "rtfp" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text]
+	lineageTag: eccec871-aeed-5b0b-8dc5-0b00581f0ead

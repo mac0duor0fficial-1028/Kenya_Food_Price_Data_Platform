@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "9dab98c355775d3895aa",
+  "position": {
+    "x": 340,
+    "y": 20,
+    "z": 0,
+    "height": 110,
+    "width": 280,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_food_price"
+                    }
+                  },
+                  "Property": "Latest Avg Price"
+                }
+              },
+              "queryRef": "fact_food_price.Latest Avg Price",
+              "nativeQueryRef": "Latest Avg Price"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Latest avg price'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

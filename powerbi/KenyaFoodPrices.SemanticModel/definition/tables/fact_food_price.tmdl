@@ -1,0 +1,128 @@
+table fact_food_price
+	lineageTag: 51d08783-82ec-5313-ab68-b5763abb371b
+
+	measure 'Avg Price' = AVERAGE ( fact_food_price[price] )
+		formatString: #,##0.00
+		displayFolder: Prices
+		lineageTag: 40be12cc-fb89-55ef-a322-95cb7f8564e4
+
+	measure 'Avg Price Prev Year' = CALCULATE ( [Avg Price], DATEADD ( dim_date[month_start], -1, YEAR ) )
+		formatString: #,##0.00
+		displayFolder: Prices
+		lineageTag: bc5f812a-5a75-5870-b9db-8dcab9696bc1
+
+	measure 'YoY %' = DIVIDE ( [Avg Price] - [Avg Price Prev Year], [Avg Price Prev Year] )
+		formatString: 0.0%
+		displayFolder: Prices
+		lineageTag: 450f291c-6565-5cc8-adc5-74565eb72fd6
+
+	measure 'Price Index (base 100)' =
+			VAR BaseDate = DATE ( 2021, 1, 1 )
+			VAR BasePrice =
+			    CALCULATE ( [Avg Price], dim_date[month_start] = BaseDate, ALL ( dim_date ) )
+			RETURN
+			    DIVIDE ( [Avg Price], BasePrice ) * 100
+		formatString: 0.0
+		displayFolder: Prices
+		lineageTag: 091edb77-7707-5b10-a620-632bab62508d
+
+	measure 'Markets Reporting' = DISTINCTCOUNT ( fact_food_price[market_key] )
+		formatString: #,##0
+		displayFolder: Coverage
+		lineageTag: 4fe95432-7fc8-529a-a866-ef7801aa7f92
+
+	measure 'Products Reporting' = DISTINCTCOUNT ( fact_food_price[product_key] )
+		formatString: #,##0
+		displayFolder: Coverage
+		lineageTag: 58dce9b7-52af-5172-8bf6-987b7ebef49b
+
+	measure 'Price Records' = COUNTROWS ( fact_food_price )
+		formatString: #,##0
+		displayFolder: Coverage
+		lineageTag: 95ae2c88-a54b-54c0-bab9-cfe59badd77c
+
+	measure 'Latest Month' = MAX ( fact_food_price[month_start] )
+		formatString: mmm yyyy
+		displayFolder: Coverage
+		lineageTag: 3f00abf4-7f67-5db4-864f-0b8819b20b0f
+
+	measure 'Latest Avg Price' = CALCULATE ( [Avg Price], dim_date[month_start] = [Latest Month] )
+		formatString: #,##0.00
+		displayFolder: Prices
+		lineageTag: a176aa1e-ddbd-5dbd-8d94-f7876e9f31dc
+
+	column month_start
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: fe752495-4227-5900-9305-8e98117633d7
+		summarizeBy: none
+		sourceColumn: month_start
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 369b068a-c402-5e05-8b2f-82ab32453d38
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column market_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 745fc7a5-627c-5e24-9b3b-36d656dc0cac
+		summarizeBy: none
+		sourceColumn: market_key
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 93e6b4ed-fcdd-5dca-bb8b-f933ac3676a9
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column price
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 17f67bef-ce3b-5611-881e-8bf564b05667
+		summarizeBy: none
+		sourceColumn: price
+
+	column currency
+		dataType: string
+		lineageTag: 752021a9-0d8d-5ca7-9391-b5b8837e8976
+		summarizeBy: none
+		sourceColumn: currency
+
+	column run_id
+		dataType: string
+		lineageTag: 3834bb14-e250-5497-90cf-24cbfa1aa6fb
+		summarizeBy: none
+		sourceColumn: run_id
+
+	column source_row
+		dataType: int64
+		formatString: 0
+		lineageTag: a4980d7e-cd43-5eae-828d-978ddd5db98b
+		summarizeBy: none
+		sourceColumn: source_row
+
+	column loaded_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 13bb626e-5b9d-5f96-946d-11bd1679f446
+		summarizeBy: none
+		sourceColumn: loaded_at
+
+	partition fact_food_price = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(PgServer, PgDatabase),
+				    Data = Source{[Schema = "dw", Name = "v_fact_food_price_published"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"month_start", type date}, {"date_key", Int64.Type}, {"market_key", Int64.Type}, {"product_key", Int64.Type}, {"price", type number}, {"currency", type text}, {"run_id", type text}, {"source_row", Int64.Type}, {"loaded_at", type datetime}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

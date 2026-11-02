@@ -1,0 +1,40 @@
+table dim_product
+	lineageTag: bfea01d3-db8d-5f05-9559-4739933ae5f5
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 41ef71e1-5a61-52cf-abae-0adc87d2ac54
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column product_name
+		dataType: string
+		lineageTag: c7d4c6eb-73dd-5137-90a6-92dcff1e49cd
+		summarizeBy: none
+		sourceColumn: product_name
+
+	column food_group
+		dataType: string
+		lineageTag: 2ef9e0ce-27bd-580f-ae33-df448e1134b5
+		summarizeBy: none
+		sourceColumn: food_group
+
+	column unit
+		dataType: string
+		lineageTag: 19e2d161-f7f2-51db-9db1-5230e43c0a30
+		summarizeBy: none
+		sourceColumn: unit
+
+	partition dim_product = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(PgServer, PgDatabase),
+				    Data = Source{[Schema = "dw", Name = "dim_product"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"product_key", Int64.Type}, {"product_name", type text}, {"food_group", type text}, {"unit", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,66 @@
+table dim_date
+	dataCategory: Time
+	lineageTag: e9c17c0f-71b6-55af-ab29-da8df5d03aed
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d88d6d15-314e-5fc0-8fab-ef35d9baaff3
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column month_start
+		dataType: dateTime
+		isKey
+		formatString: mmm yyyy
+		lineageTag: ddc4c972-5d03-5993-ac75-4fb1eb030b60
+		summarizeBy: none
+		sourceColumn: month_start
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: e1b7d2c9-4098-57e0-9ca6-3265043b71e4
+		summarizeBy: none
+		sourceColumn: year
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b7f72cd-474d-53d6-b5c0-4d018b06e2ae
+		summarizeBy: none
+		sourceColumn: quarter
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d564ef2-2a57-51de-b666-ee43f6b62bf0
+		summarizeBy: none
+		sourceColumn: month
+
+	column month_name
+		dataType: string
+		lineageTag: 5af32474-1b34-5a64-a118-4bc1a1425ff8
+		sortByColumn: month
+		summarizeBy: none
+		sourceColumn: month_name
+
+	column year_month
+		dataType: string
+		lineageTag: e2ce467c-78ee-5fe9-8237-525c65b669d2
+		sortByColumn: month_start
+		summarizeBy: none
+		sourceColumn: year_month
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(PgServer, PgDatabase),
+				    Data = Source{[Schema = "dw", Name = "dim_date"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"date_key", Int64.Type}, {"month_start", type date}, {"year", Int64.Type}, {"quarter", Int64.Type}, {"month", Int64.Type}, {"month_name", type text}, {"year_month", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

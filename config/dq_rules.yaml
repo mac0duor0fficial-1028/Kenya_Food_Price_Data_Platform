@@ -1,0 +1,10 @@
+checks:
+  - {name: row_count_min,      severity: error,   min_rows: 1000}
+  - {name: not_null_keys,      severity: error,   columns: [market_name, product_name, month_start, price]}
+  - {name: price_positive,     severity: error}
+  - {name: unique_grain,       severity: error,   grain: [market_name, admin1, product_name, month_start]}
+  - {name: date_range,         severity: warn,    min: "2007-01-01", max: "2030-01-01"}
+  - {name: price_outlier_iqr,  severity: warn,    k: 5.0, group_by: [product_name]}
+  - {name: coords_in_kenya,    severity: warn,    lat: [-5.0, 5.5], lon: [33.5, 42.0]}
+  - {name: fk_orphans,         severity: error}
+  - {name: rowcount_vs_source, severity: error}

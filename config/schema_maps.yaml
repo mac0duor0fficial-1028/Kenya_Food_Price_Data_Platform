@@ -1,0 +1,23 @@
+source:
+  file: data/raw/KEN_RTFP_mkt_2007_2026-10-05.csv
+  format: csv            # csv | stata | excel
+  encoding: utf-8
+columns:                 # canonical_name: source_column
+  market_name: market
+  admin1: region
+  latitude: latitude
+  longitude: longitude
+  product_name: product
+  price_date: date
+  price: price
+  unit: unit
+  currency: currency
+date:
+  mode: single           # single | year_month
+  year_col: year
+  month_col: month
+  format: "%Y-%m-%d"
+constants:
+  country_iso3: KEN
+  currency_default: KES
+  price_unit_default: KG

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "7515170393635695a5ea",
+  "position": {
+    "x": 340,
+    "y": 440,
+    "z": 0,
+    "height": 260,
+    "width": 920,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_market"
+                    }
+                  },
+                  "Property": "market_name"
+                }
+              },
+              "queryRef": "dim_market.market_name",
+              "nativeQueryRef": "market_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_market"
+                    }
+                  },
+                  "Property": "admin1"
+                }
+              },
+              "queryRef": "dim_market.admin1",
+              "nativeQueryRef": "admin1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_food_price"
+                    }
+                  },
+                  "Property": "Latest Avg Price"
+                }
+              },
+              "queryRef": "fact_food_price.Latest Avg Price",
+              "nativeQueryRef": "Latest Avg Price"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_food_price"
+                    }
+                  },
+                  "Property": "YoY %"
+                }
+              },
+              "queryRef": "fact_food_price.YoY %",
+              "nativeQueryRef": "YoY %"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Market detail'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

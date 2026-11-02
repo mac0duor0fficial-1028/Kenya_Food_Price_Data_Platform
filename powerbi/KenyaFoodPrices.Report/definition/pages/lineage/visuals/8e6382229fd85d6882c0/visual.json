@@ -1,0 +1,172 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "8e6382229fd85d6882c0",
+  "position": {
+    "x": 20,
+    "y": 150,
+    "z": 0,
+    "height": 550,
+    "width": 1240,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "started_at"
+                }
+              },
+              "queryRef": "lineage.started_at",
+              "nativeQueryRef": "started_at"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "status"
+                }
+              },
+              "queryRef": "lineage.status",
+              "nativeQueryRef": "status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "source_name"
+                }
+              },
+              "queryRef": "lineage.source_name",
+              "nativeQueryRef": "source_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "source_sha256"
+                }
+              },
+              "queryRef": "lineage.source_sha256",
+              "nativeQueryRef": "source_sha256"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "git_commit"
+                }
+              },
+              "queryRef": "lineage.git_commit",
+              "nativeQueryRef": "git_commit"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "rows_extracted"
+                }
+              },
+              "queryRef": "lineage.rows_extracted",
+              "nativeQueryRef": "rows_extracted"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "rows_clean"
+                }
+              },
+              "queryRef": "lineage.rows_clean",
+              "nativeQueryRef": "rows_clean"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "rows_rejected"
+                }
+              },
+              "queryRef": "lineage.rows_rejected",
+              "nativeQueryRef": "rows_rejected"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "lineage"
+                    }
+                  },
+                  "Property": "rows_loaded"
+                }
+              },
+              "queryRef": "lineage.rows_loaded",
+              "nativeQueryRef": "rows_loaded"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Pipeline runs'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

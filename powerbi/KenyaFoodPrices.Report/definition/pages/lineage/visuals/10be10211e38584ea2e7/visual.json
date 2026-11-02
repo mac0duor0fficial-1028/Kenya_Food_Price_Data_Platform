@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "10be10211e38584ea2e7",
+  "position": {
+    "x": 340,
+    "y": 20,
+    "z": 0,
+    "height": 110,
+    "width": 300,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_food_price"
+                    }
+                  },
+                  "Property": "Price Records"
+                }
+              },
+              "queryRef": "fact_food_price.Price Records",
+              "nativeQueryRef": "Price Records"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Published price records'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

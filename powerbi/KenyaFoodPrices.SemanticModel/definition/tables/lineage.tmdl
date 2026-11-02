@@ -1,0 +1,91 @@
+table lineage
+	lineageTag: dd956f46-1889-561a-9cc4-3251660dee50
+
+	measure 'Rows Loaded (latest run)' = CALCULATE ( SUM ( lineage[rows_loaded] ), TOPN ( 1, ALL ( lineage ), lineage[started_at], DESC ) )
+		formatString: #,##0
+		displayFolder: Lineage
+		lineageTag: b7f524d2-a1d8-53be-ae1b-4dc1083583ba
+
+	column run_id
+		dataType: string
+		lineageTag: 77038384-d52c-5c21-89fe-1ae871ce1d7c
+		summarizeBy: none
+		sourceColumn: run_id
+
+	column source_name
+		dataType: string
+		lineageTag: a4d4efa7-3f7a-59c0-a5dc-6254ee0e682c
+		summarizeBy: none
+		sourceColumn: source_name
+
+	column source_sha256
+		dataType: string
+		lineageTag: 1fa3e2d3-e575-5973-aa20-bf43daad5d29
+		summarizeBy: none
+		sourceColumn: source_sha256
+
+	column git_commit
+		dataType: string
+		lineageTag: b94bbc8b-8c5a-527e-9b67-c23e048efc88
+		summarizeBy: none
+		sourceColumn: git_commit
+
+	column status
+		dataType: string
+		lineageTag: e6a1ba55-4f5e-5151-9f51-27f3f910596b
+		summarizeBy: none
+		sourceColumn: status
+
+	column started_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c3e55011-1fa1-5f4e-b9c2-a7f73db891b9
+		summarizeBy: none
+		sourceColumn: started_at
+
+	column finished_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cbd38321-f188-589b-8241-e88cd12d8990
+		summarizeBy: none
+		sourceColumn: finished_at
+
+	column rows_extracted
+		dataType: int64
+		formatString: #,##0
+		lineageTag: d4b4b55b-6d6d-5e18-8215-607ab3eb1a57
+		summarizeBy: none
+		sourceColumn: rows_extracted
+
+	column rows_clean
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 684108d5-575d-5fea-95d6-2648828b8a9c
+		summarizeBy: none
+		sourceColumn: rows_clean
+
+	column rows_rejected
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 58a8c22a-aca3-56d4-aaef-aff9fe7c6df3
+		summarizeBy: none
+		sourceColumn: rows_rejected
+
+	column rows_loaded
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 455af7fd-e764-5dd5-94c4-3124f1572e15
+		summarizeBy: none
+		sourceColumn: rows_loaded
+
+	partition lineage = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(PgServer, PgDatabase),
+				    Data = Source{[Schema = "dw", Name = "v_lineage"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"run_id", type text}, {"source_name", type text}, {"source_sha256", type text}, {"git_commit", type text}, {"status", type text}, {"started_at", type datetime}, {"finished_at", type datetime}, {"rows_extracted", Int64.Type}, {"rows_clean", Int64.Type}, {"rows_rejected", Int64.Type}, {"rows_loaded", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

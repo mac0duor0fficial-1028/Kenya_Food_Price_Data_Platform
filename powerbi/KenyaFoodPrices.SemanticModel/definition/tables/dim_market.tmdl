@@ -1,0 +1,56 @@
+table dim_market
+	lineageTag: bbdbadc9-bad0-53e5-886f-b3f2c7db6786
+
+	column market_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2f363868-d557-5b2b-854b-9ed7b87a0428
+		summarizeBy: none
+		sourceColumn: market_key
+
+	column market_name
+		dataType: string
+		lineageTag: 95101c6b-a2d2-55fb-8017-68a5e9263bb7
+		summarizeBy: none
+		sourceColumn: market_name
+
+	column admin1
+		dataType: string
+		lineageTag: a8edf812-2e70-51eb-827f-8ff2562a4838
+		summarizeBy: none
+		sourceColumn: admin1
+
+	column latitude
+		dataType: double
+		formatString: 0.000000
+		dataCategory: Latitude
+		lineageTag: a4704318-b82f-5478-b661-a7d06d896965
+		summarizeBy: none
+		sourceColumn: latitude
+
+	column longitude
+		dataType: double
+		formatString: 0.000000
+		dataCategory: Longitude
+		lineageTag: 4ba7d4c0-f140-54a1-bfa7-b9ec668b021d
+		summarizeBy: none
+		sourceColumn: longitude
+
+	column country_iso3
+		dataType: string
+		lineageTag: 8bde960e-0f73-595f-9d8c-80f9a9dd7bc3
+		summarizeBy: none
+		sourceColumn: country_iso3
+
+	partition dim_market = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(PgServer, PgDatabase),
+				    Data = Source{[Schema = "dw", Name = "dim_market"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"market_key", Int64.Type}, {"market_name", type text}, {"admin1", type text}, {"latitude", type number}, {"longitude", type number}, {"country_iso3", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

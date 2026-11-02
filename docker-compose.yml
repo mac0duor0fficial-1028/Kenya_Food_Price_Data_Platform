@@ -1,0 +1,13 @@
+services:
+  warehouse:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${PG_USER:-rtfp}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-rtfp}
+      POSTGRES_DB: ${PG_DB:-rtfp}
+    ports: ["5433:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d:ro   # runs 001..004 on first start
+volumes:
+  pgdata:

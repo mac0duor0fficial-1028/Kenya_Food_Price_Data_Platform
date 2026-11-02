@@ -1,0 +1,12 @@
+relationship 84339df1-3587-5bdc-8f37-84663ff79f76
+	fromColumn: fact_food_price.month_start
+	toColumn: dim_date.month_start
+
+relationship 726c6750-1998-5b13-882c-da6378d96eaf
+	fromColumn: fact_food_price.market_key
+	toColumn: dim_market.market_key
+
+relationship eac263b2-2ef5-589e-8af4-5c4cfc91f420
+	fromColumn: fact_food_price.product_key
+	toColumn: dim_product.product_key
+
