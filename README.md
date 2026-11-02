@@ -11,7 +11,7 @@ A reproducible batch pipeline for the World Bank dataset
 **Monthly food price estimates by product and market, Kenya** (`KEN_2021_RTFP_v02_M`).
 Source: <https://microdata.worldbank.org/catalog/6167>
 
-![Kenya_Food_Price_Data_Platform_Architecture](images/your-exported-diagram.svg)
+![Kenya_Food_Price_Data_Platform_Architecture](docs/images/Kenya_Food_Price_Data_Platform.png)
 
 
 - **Orchestration:** Apache Airflow (one DAG, 7 tasks)
