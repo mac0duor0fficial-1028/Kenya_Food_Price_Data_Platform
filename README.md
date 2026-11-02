@@ -1,6 +1,10 @@
 # Kenya_Food_Price_Data_Platform
----
+
 This is a reproducible, data-integrity-focused batch ETL pipeline that automates the ingestion, transformation, and optimization of sub-national market price tracking datasets. Built using Apache Airflow, pandas, and a PostgreSQL star schema, this platform structures fragile real-time development indicators into analytics-ready dimensions and facts for reporting inside Power BI.
+It uses the World Bank dataset
+**Monthly food price estimates by product and market, Kenya** (`KEN_2021_RTFP_v02_M`).
+Source: <https://microdata.worldbank.org/catalog/6167>
+
 > Airflow → pandas → PostgreSQL → Power BI
 
 A reproducible batch pipeline for the World Bank dataset
